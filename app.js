@@ -10,12 +10,10 @@ window.addEventListener('scroll', () => {
 
     if(scrollPosition() > lastScroll && !containHide()) {
         header.classList.add('hide')
-        console.log('down');
     }
     else if(scrollPosition() < lastScroll && containHide()) {
         header.classList.remove('hide')
-        console.log('up');
     }
     
     lastScroll = scrollPosition();
-})
+})  
