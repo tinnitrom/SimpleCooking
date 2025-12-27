@@ -10,7 +10,6 @@ body {
     padding-top: 64px;
 }
 
-/* HEADER */
 .header {
     position: fixed;
     top: 0;
@@ -55,7 +54,6 @@ body {
     color: #fff;
 }
 
-/* HERO */
 .box-main {
     background: #434343;
     padding: 100px 24px;
@@ -76,7 +74,6 @@ body {
     cursor: pointer;
 }
 
-/* CARDS */
 .card-grid {
     display: flex;
     gap: 32px;
@@ -123,4 +120,16 @@ body {
 .socials span {
     margin-right: 12px;
     cursor: pointer;
+}
+.search-box input {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    outline: none;
+    width: 180px;
+}
+
+.search-box input:focus {
+    border-color: #1e1e1e;
 }
