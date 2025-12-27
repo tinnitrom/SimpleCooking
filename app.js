@@ -17,3 +17,13 @@ window.addEventListener('scroll', () => {
     
     lastScroll = scrollPosition();
 })  
+
+const cards = document.querySelectorAll('.card');
+
+if (cards.length > 0) {
+    cards[0].addEventListener('click', () => {
+        window.location.href = 'Recepts/sirnyki.html';
+    });
+
+    cards[0].style.cursor = 'pointer';
+}
