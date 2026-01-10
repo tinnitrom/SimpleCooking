@@ -8,9 +8,10 @@ const closeModalBtn = document.querySelector('.modal-close');
 const searchInput = document.getElementById('searchInput');
 const cards = document.querySelectorAll('.card');
 const cardGrid = document.querySelector('.card-grid');
-
+const aboutBtn = document.querySelector('.about-btn');
 const saveBtn = document.getElementById('saveRecipe');
 const clear_cusotm = document.querySelector('#clear_custom')
+
 
 const scrollPosition = () => window.pageYOffset || document.documentElement.scrollTop;
 const containHide = () => header && header.classList.contains('hide');
@@ -34,6 +35,7 @@ if (return_btn) {
         window.location.href = '../main.html';
     });
 }
+
 
 /* ---------- CARD CLICK ---------- */
 function attachCardClick(card) {
@@ -127,5 +129,13 @@ if (clear_cusotm){
     clear_cusotm.addEventListener('click', () => {
         localStorage.clear();
         location.reload();
+    });
+}
+
+/* ---------- ABOUT BUTTON ---------- */
+if (aboutBtn) {
+    aboutBtn.style.cursor = 'pointer';
+    aboutBtn.addEventListener('click', () => {
+        window.location.href = 'about.html';
     });
 }

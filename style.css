@@ -203,3 +203,64 @@ body {
 #addModal.active {
     display: flex; 
 }
+
+.card {
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.card img {
+    transition: transform 0.3s ease;
+}
+
+.card:hover img {
+    transform: scale(1.05);
+}
+
+.socials {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.social-icon {
+    width: 24px;
+    height: 24px;
+    filter: grayscale(100%); 
+    transition: filter 0.2s, transform 0.2s;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);  
+}
+
+
+.button-add:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    background: #ffffff; 
+}
+
+
+.dropdown-menu {
+    position: absolute;
+    top: 64px;
+    right: 32px; 
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 8px 0;
+    display: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 20;
+}
+
