@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Рецепт — SimpleCooking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2 { text-align: center; }
+        .container { max-width: 700px; margin: auto; }
+
+        .ingredients, .steps {
+            background: #f9f9f9;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        ul { list-style: none; padding-left: 0; }
+        li { margin-bottom: 8px; }
+        .step { margin-bottom: 16px; }
+
+        .return {
+            cursor: pointer;
+            font-size: 24px;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="return" onclick="history.back()">◄</div>
+</header>
+
+<div class="container">
+    <h1 id="title"></h1>
+    <p id="desc"></p>
+
+    <div class="ingredients">
+        <h2>Інгредієнти</h2>
+        <ul id="ingredients"></ul>
+    </div>
+
+    <div class="steps">
+        <h2>Покрокова інструкція</h2>
+        <div id="steps"></div>
+    </div>
+</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const id = Number(params.get('id'));
+
+const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+const recipe = recipes.find(r => r.id === id);
+
+if (!recipe) {
+    document.body.innerHTML = '<h2>Рецепт не знайдено</h2>';
+} else {
+    document.getElementById('title').innerText = recipe.title;
+    document.getElementById('desc').innerText = recipe.desc;
+
+    recipe.ingredients.forEach(i => {
+        const li = document.createElement('li');
+        li.textContent = i;
+        document.getElementById('ingredients').appendChild(li);
+    });
+
+    recipe.steps.forEach((s, i) => {
+        const div = document.createElement('div');
+        div.className = 'step';
+        div.innerHTML = `<strong>${i+1})</strong> ${s}`;
+        document.getElementById('steps').appendChild(div);
+    });
+}
+</script>
+
+</body>
+</html>

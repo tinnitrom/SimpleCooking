@@ -1,118 +1,131 @@
-
+console.log('js is active');
 let lastScroll = 0;
-const defaultOffset = 200;
 const header = document.querySelector('.header');
+const return_btn = document.querySelector('.return');
+const add_btn = document.querySelector('.button-add');
+const modal1 = document.querySelector('.modal');
+const closeModalBtn = document.querySelector('.modal-close');
+const searchInput = document.getElementById('searchInput');
+const cards = document.querySelectorAll('.card');
+const cardGrid = document.querySelector('.card-grid');
+
+const saveBtn = document.getElementById('saveRecipe');
+const clear_cusotm = document.querySelector('#clear_custom')
 
 const scrollPosition = () => window.pageYOffset || document.documentElement.scrollTop;
-const containHide = () => header.classList.contains('hide');
+const containHide = () => header && header.classList.contains('hide');
 
-window.addEventListener('scroll', () => {
-
-    if(scrollPosition() > lastScroll && !containHide()) {
-        header.classList.add('hide')
-    }
-    else if(scrollPosition() < lastScroll && containHide()) {
-        header.classList.remove('hide')
-    }
-    
-    lastScroll = scrollPosition();
-})  
-
-const cards = document.querySelectorAll('.card');
-
-if (cards.length > 0) {
-    // Сирники
-    if (cards[0]) {
-        cards[0].style.cursor = 'pointer';
-        cards[0].addEventListener('click', () => {
-            window.location.href = 'Recepts/sirnyki.html';
-        });
-    }
-
-    // Борщ
-    if (cards[1]) {
-        cards[1].style.cursor = 'pointer';
-        cards[1].addEventListener('click', () => {
-            window.location.href = 'Recepts/borsch.html';
-        });
-    }
-
-    // Котлети по-київськи
-    if (cards[2]) {
-        cards[2].style.cursor = 'pointer';
-        cards[2].addEventListener('click', () => {
-            window.location.href = 'Recepts/kotleta.html';
-        })
-    }
-
-    // Булочки з маком
-    if (cards[3]) {
-        cards[3].style.cursor = 'pointer';
-        cards[3].addEventListener('click', () => {
-            window.location.href = 'Recepts/bulochka.html';
-        });
-    }
-
-    // Олів’є
-    if (cards[4]) {
-        cards[4].style.cursor = 'pointer';
-        cards[4].addEventListener('click', () => {
-            window.location.href = 'Recepts/olivye.html';
-        });
-    }
-
-    // Тірамісу
-    if (cards[5]) {
-        cards[5].style.cursor = 'pointer';
-        cards[5].addEventListener('click', () => {
-            window.location.href = 'Recepts/tiramicy.html';
-        });
-    }
-
-    // Шарлотка з яблуками
-    if (cards[6]) {
-        cards[6].style.cursor = 'pointer';
-        cards[6].addEventListener('click', () => {
-            window.location.href = 'Recepts/sharlotka.html';
-        });
-    }
-
-    // Паста з грибами у вершковому соусі
-    if (cards[7]) {
-        cards[7].style.cursor = 'pointer';
-        cards[7].addEventListener('click', () => {
-            window.location.href = 'Recepts/pasta.html';
-        });
-    }
-
-    // Запечена риба з лимоном і травами
-    if (cards[8]) {
-        cards[8].style.cursor = 'pointer';
-        cards[8].addEventListener('click', () => {
-            window.location.href = 'Recepts/ryba.html';
-        });
-    }
-
-    // Піца на сковороді
-    if (cards[9]) {
-        cards[9].style.cursor = 'pointer';
-        cards[9].addEventListener('click', () => {
-            window.location.href = 'Recepts/pizza.html';
-        });
-    }
+/* ---------- HEADER ---------- */
+if (header) {
+    window.addEventListener('scroll', () => {
+        if (scrollPosition() > lastScroll && !containHide()) {
+            header.classList.add('hide');
+        } else if (scrollPosition() < lastScroll && containHide()) {
+            header.classList.remove('hide');
+        }
+        lastScroll = scrollPosition();
+    });
 }
 
-// Поиск по карточкам
-const searchInput = document.getElementById('searchInput');
-const cards1 = document.querySelectorAll('.card');
+/* ---------- RETURN ---------- */
+if (return_btn) {
+    return_btn.style.cursor = 'pointer';
+    return_btn.addEventListener('click', () => {
+        window.location.href = '../main.html';
+    });
+}
 
+/* ---------- CARD CLICK ---------- */
+function attachCardClick(card) {
+    const link = card.dataset.link;
+    if (!link) return;
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+        window.location.href = link;
+    });
+}
+
+cards.forEach(attachCardClick);
+
+/* ---------- SEARCH ---------- */
 if (searchInput) {
     searchInput.addEventListener('input', () => {
         const value = searchInput.value.toLowerCase();
-
-        cards1.forEach(card => {
-            const text = card.innerText.toLowerCase();
-            card.style.display = text.includes(value) ? 'block' : 'none';
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.display = card.innerText.toLowerCase().includes(value)
+                ? 'block'
+                : 'none';
         });
+    });
+}
+
+/* ---------- MODAL ---------- */
+if (add_btn) {
+    add_btn.addEventListener('click', () => {
+        modal1.classList.add('active');
+    });
+}
+
+if (closeModalBtn) {
+    closeModalBtn.addEventListener('click', () => {
+        modal1.classList.remove('active');
+    });
+}
+
+/* ---------- STORAGE ---------- */
+function getRecipes() {
+    return JSON.parse(localStorage.getItem('recipes')) || [];
+}
+
+function saveRecipes(data) {
+    localStorage.setItem('recipes', JSON.stringify(data));
+}
+
+/* ---------- ADD RECIPE ---------- */
+if (saveBtn) {
+    saveBtn.addEventListener('click', () => {
+        const title = rTitle.value.trim();
+        const img = rImg.value.trim();
+        const desc = rDesc.value.trim();
+        const ingredients = rIngredients.value.split('\n');
+        const steps = rSteps.value.split('\n');
+
+        if (!title || !img) return alert('Заповни назву та картинку');
+
+        const recipes = getRecipes();
+        const id = Date.now();
+
+        recipes.push({ id, title, img, desc, ingredients, steps });
+        saveRecipes(recipes);
+
+        addRecipeCard({ id, title, img });
+
+        modal1.classList.remove('active');
+    });
+}
+
+/* ---------- CREATE CARD ---------- */
+function addRecipeCard(recipe) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.link = `recipe.html?id=${recipe.id}`;
+
+    card.innerHTML = `
+        <img src="${recipe.img}">
+        <p>${recipe.title}</p>
+    `;
+
+    attachCardClick(card);
+    cardGrid.appendChild(card);
+}
+
+/* ---------- LOAD SAVED ---------- */
+window.addEventListener('DOMContentLoaded', () => {
+    getRecipes().forEach(addRecipeCard);
+});
+if (clear_cusotm){
+    clear_cusotm.addEventListener('click', () => {
+        localStorage.clear();
+        location.reload();
     });
 }
