@@ -32,7 +32,7 @@ if (header) {
 if (return_btn) {
     return_btn.style.cursor = 'pointer';
     return_btn.addEventListener('click', () => {
-        window.location.href = '../main.html';
+        window.location.href = '../index.html';
     });
 }
 
@@ -139,3 +139,4 @@ if (aboutBtn) {
         window.location.href = 'about.html';
     });
 }
+
